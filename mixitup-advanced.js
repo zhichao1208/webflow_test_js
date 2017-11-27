@@ -1,3 +1,50 @@
+
+$('.w-dyn-item .categ').each(
+
+  function(index, element) {
+
+    var _this = $(element);
+
+    var text = _this.text();
+
+    var select = text.indexOf(' ') == -1 ? text.length : text.indexOf(' '); 
+
+    var className = text.substr(0, select);
+       
+    _this.parent().addClass(className.toLowerCase());
+   
+  }
+);
+
+//Here we use class of that text field with the category name (reference field). Don't forget to change '.categ' if you used different class name.
+
+//- Adding data-filter attributes for dynamic filters (for the categories)
+
+$('.w-form-label').each(
+  function() {
+    var catName = $(this).text();
+     console.log(catName)
+      $(this).parent().children().attr('value', catName.toLowerCase());
+   // $(this).attr('data-filter', catName.toLowerCase());
+   
+});
+
+// To keep our code clean and modular, all custom functionality 
+//will be contained inside a single object literal called "checkboxFilter".
+//  
+// On document ready, initialise our code.
+//
+$(document).ready(function($){
+  // Initialize checkboxFilter code
+  checkboxFilter.init();
+  // Instantiate MixItUp
+  $('#container').mixItUp();
+  controls: {
+    toggleFilterButtons: true
+  }
+});
+
+
 var checkboxFilter = {
   
   // Declare any variables we will need as properties of the object
@@ -8,7 +55,9 @@ var checkboxFilter = {
   outputArray: [],
   outputString: '',
   
-  // The "init" method will run on document ready and cache any jQuery objects we will need.
+  // The "init" method will run on document ready and cache 
+
+  any jQuery objects we will need.
   
   init: function(){
     var self = this; // As a best practice, in each method we will asign "this" to the variable "self" so that it remains scope-agnostic. We will use it to refer to the parent "checkboxFilter" object so that we can share methods and properties between all parts of the object.
