@@ -105,6 +105,7 @@ data[0..10].each do |item|
 
 
 	puts mains = glossList&mains
+	puts "-----"
 	puts diff = glossList - mains
 	puts "======"
 
