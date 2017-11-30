@@ -4,23 +4,14 @@ require 'nokogiri'
 require 'open-uri'
 require 'iconv'
 
-=begin
-url = "https://www.bigoven.com/glossary"
 
-glossList = []
+def getRecipes
 
-page = Nokogiri::HTML(open(url))
+# not include all
 
-title = page.title
+return data = JSON.parse(File.read('/Users/li/Downloads/Script/gitFiles/food/recipes0-100.json'))
 
-links = page.css("a").select{|item| if !item["href"].nil? then item["href"].include?('/article/recipe/') end}
-
-
-links[20..25].each do |link|
-
-	glossary = link["href"].split('/')[-1]
-
-=end
+end	
 
 def getCategory (glossary)
 
