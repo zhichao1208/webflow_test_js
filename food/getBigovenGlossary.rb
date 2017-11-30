@@ -14,17 +14,26 @@ title = page.title
 
 links = page.css("a").select{|item| if !item["href"].nil? then item["href"].include?('/article/recipe/') end}
 
-links.each do |link|
+
+links[10..11].each do |link|
 
 	glossary = link["href"].split('/')[-1]
 
-	glossary = Iconv.iconv('ascii//translit', 'utf-8', glossary).to_s
+	puts input = Iconv.iconv('ascii//translit', 'utf-8', glossary)[0].to_s.gsub(' ','+')
 
-	url = "https://www.bigoven.com/recipes/#{glossary.gsub(' ','%20')}/best"
+	searchUrl = "https://www.tesco.com/groceries/en-GB/search?query=#{input}"
 
-	page = Nokogiri::HTML(open(url))
+	puts searchPage = Nokogiri::HTML(open(searchUrl))
 
-	puts title = page.title
+
+			puts categorys = page.css("li")
+
+		puts "===="
+sleep 1
+
+end
+
+=begin
 
 	voteAll = page.css("div[class = 'upvote-counter left-arrow']")
 
@@ -54,3 +63,4 @@ File.open("/Users/li/Downloads/Script/gitFiles/food/glossList_withVote.json","w"
   f.write(glossList_withVote.to_json)
 end
 
+=end

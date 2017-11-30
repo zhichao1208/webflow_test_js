@@ -2,6 +2,7 @@ require 'net/http'
 require 'json'
 require 'nokogiri'         
 require 'open-uri'
+
 =begin
 recipeLinks = []
 
@@ -67,18 +68,10 @@ glossList = glossList.sort.slice_when{|i,j| j!=i}.map{|item| {"name"=>item[0],"c
 File.open("/Users/li/Downloads/Script/gitFiles/food/glossList.json","w") do |f|
   f.write(glossList.to_json)
 end
-=end
 
 list = JSON.parse(File.read("/Users/li/Downloads/Script/gitFiles/food/glossList.json"))
 
 list = list.map{|item| item["name"]}.flatten!.sort.slice_when{|i,j| j!=i}.map{|item| {"name"=>item[0],"count"=>item.count}}.sort_by{|item| item["count"]}.reverse
-
-sides = ["parmesan","parsley","lemon","garlic","onion"]
-
-
-mains = ["chicken breast","tomatoes","chicken","egg","tortilla","chicken broth","ground beef",
-		"mushrooms","tomato","milk","pasta","mozzarella","paprika","rice","cheddar cheese"]
-
 
 data = []
 
@@ -89,51 +82,58 @@ end
 data << JSON.parse(File.read("/Users/li/Downloads/Script/gitFiles/food/recipeLinks.json"))
 data << JSON.parse(File.read("/Users/li/Downloads/Script/gitFiles/food/recipeLinks_search.json"))
 
-data.flatten!.uniq! 
+data.flatten!.uniq!
 
-data[0..1].each do |item|	
+File.open("/Users/li/Downloads/Script/gitFiles/food/data.json","w") do |f|
+  f.write(data.to_json)
+end
+=end
+
+data = JSON.parse(File.read("/Users/li/Downloads/Script/gitFiles/food/data.json"))
+
+
+recipesArray = []
+
+n = 1200
+i = -1
+
+
+data[n..i].each do |item|	
 
 	page = Nokogiri::HTML(open(item))
 
-	 title = page.title
+	title = page.title
 
-	 # puts glossList2 = page.css("span[class = 'name']")
+	 recipeName = page.css("h1")[0].text.gsub(/<\/?[^>]*>/, "")
 
-	glossLists = page.css("a[class = 'glosslink']").map{|item| item.text.downcase}
+	 time = page.css("div[class ='ready-in rc-opt']")[0].text.lstrip!.gsub(/<\/?[^>]*>/, "")
 
-	glossListsWithVote = []
+	 rate = page.css("div[class = 'recipe-rating rc-opt']").css("i[class ='ss ss-star gold']").count
 
-	glossLists.each do |gloss|
-
-		thing = list.find{|item| item["name"] == gloss}
-
-
-		if !thing.nil?
-
-			glossListsWithVote << [gloss,thing["count"]]
-
-		else
-
-			glossListsWithVote << [gloss,0]
-
-		end
-
-
+if !page.css("div[class ='trying light-med-grey hidden-xs']")[0].nil?
+	 vote = page.css("div[class ='trying light-med-grey hidden-xs']")[0].text.lstrip!.gsub(/<\/?[^>]*>/, "")
+	else
+vote = ""
 end
 
-	mains5 = glossListsWithVote.sort_by{|item| item[1]}.reverse[0..5]
+	 img = page.css("img[class ='recipe-hero-photo img-responsive']")[0]["src"]
 
-	mains3 = glossListsWithVote.sort_by{|item| item[1]}.reverse[0..3]
+	ingredientsContent = page.css("ul[class ='ingredients-list']").css("li")
 
-	others = glossListsWithVote.sort_by{|item| item[1]}.reverse
 
-	puts "mains5 is #{mains5.to_s}"
-	puts "mains3 is #{mains3.to_s}"
-	puts "others is #{others.to_s}"
-	puts "--------"
+	 ingredientsList = page.css("ul[class ='ingredients-list']").css("span[class ='name']").map{|li| li.text.downcase}
+
+
+	 instructions = page.css("div[class ='recipe-instructions']")[0].text.strip!.gsub(/<\/?[^>]*>/, "")
 
 	sleep 1
 
+	puts data.index(item)
 
+	recipesArray <<{"name"=>recipeName,"time"=>time,"rate"=>rate,"vote"=>vote,"img"=>img,"ingredientsList"=>ingredientsList,"ingredientsContent"=>ingredientsContent,"instructions"=>instructions}
 
+end
+
+File.open("/Users/li/Downloads/Script/gitFiles/food/recipes#{n}-#{i}.json","w") do |f|
+  f.write(recipesArray.to_json)
 end
