@@ -5,10 +5,7 @@ require 'open-uri'
 
 require 'active_support/inflector'
 
-require_relative 'getCategory'
-
-item =  getRecipes[0]["ingredientsList"][0]
-
-# singlar 
-
-puts item.pluralize(2)
+puts ["carrots",
+"red potatoes",
+"mushrooms",
+"turnips","red onions"].map{|item| item.singularize }

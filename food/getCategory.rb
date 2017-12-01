@@ -7,9 +7,15 @@ require 'iconv'
 
 def getRecipes
 
-# not include all
+data = []
 
-return data = JSON.parse(File.read('/Users/li/Downloads/Script/gitFiles/food/recipes0-100.json'))
+	for i in (1..11)
+	data << JSON.parse(File.read("/Users/li/Downloads/Script/gitFiles/food/recipes#{i}.json"))
+	end
+
+data.flatten!
+
+return data
 
 end	
 
@@ -25,14 +31,18 @@ def getCategory (glossary)
 
 	page = Nokogiri::HTML(response.body)
 
-	list = page.css("ul[id = 'clusters']").css("li")
+	noResult = page.css("div[class = 'didYouMean']").text.include?("No results found for")
+
+	if noResult == false
+
+			list = page.css("ul[id = 'clusters']").css("li")
 
 			list.each do |item|
 
 			linkItem["category"] <<{"level"=> item["class"].split("-")[-1],"name"=>item.text.gsub(/<\/?[^>]*>/, "")}
 
 			end
-
+	end
 
 return linkItem 
 
