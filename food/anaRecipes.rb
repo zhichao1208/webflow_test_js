@@ -2,31 +2,18 @@ require 'net/http'
 require 'uri'
 require 'nokogiri'         
 require 'open-uri'
-
+require 'similar_text'
 require 'active_support/inflector'
 
 require_relative 'getCategory'
 
-# ingredients =  getRecipes.map{|recipe| recipe["ingredientsList"].map{|item| item.singularize} }.flatten
 
-# singlar 
+def string_difference_percent(a, b)
+  longer = [a.size, b.size].max
+  same = a.each_char.zip(b.each_char).select { |a,b| a == b }.size
+  (longer - same) / a.size.to_f
+end
 
-# glossData = ingredients.sort.slice_when{|i,j| j!=i}.map{|item|{"name"=>item[0],"count"=>item.count} }.sort_by{|item| item["count"]} 
-
-=begin
-useless = ["boneless","skinless","fresh","finely",
-	"chopped","sliced","ground","freshly","and","thinly","sliced",
-	"toasted","uncooked","whole","wheat","wild","powdered","prepared",
-	"refrigerated","roasted","seasoned","shaved","cocked","shredded","sliced","water","slices",
-	"thinly","sliced","optional","minced","tbls","diced","(melted)","(softened)","extra","virgin",
-	"skinless,","skinless","small-diced","grated","extra-virgin","peeled","diced","tsp.","reduced-sodium",
-	"reduced-fat"]
-=end
-
-# recipes each 
-
-	# singlar 
-	# delete useless word
 
 allgloss = JSON.parse(File.read("/Users/li/Downloads/Script/gitFiles/food/glossWithType.json"))
 
@@ -49,7 +36,7 @@ end
 
 allRecipes = JSON.parse(File.read("/Users/li/Downloads/Script/gitFiles/food/allRecipes.json"))
 
-allRecipes[9..10].each do |recipe|
+allRecipes.each do |recipe|
 
 	itemArray = []
 
@@ -57,28 +44,31 @@ allRecipes[9..10].each do |recipe|
 
 	 	hasType = allgloss.find{|gloss| gloss["name"] == item}
 
-	 	if !hasType.nil?
+	 	if !hasType.nil? && !hasType["category"].empty?
 
-	 		itemArray  << {"name" => item,"type"=>hasType["category"]}
+	 		itemArray  << {"name" => item.split('%20').map{|word| word.capitalize}.join(' '),"type"=>hasType["category"]}
 
 	 	else
 
-	 		itemArray  << {"name" => item,"type"=>[]}
-
+	 		itemArray  << {"name" => item.split('%20').map{|word| word.capitalize}.join(' '),"type"=>[{"level"=>"1", "name"=>"None"}]}
 
 	 	end	
 
 	end
 
 recipe["ingredientsList_new"] = itemArray
-puts recipe["name"]
-puts recipe["ingredientsList_new"].select{|item| item["type"][0]["name"] == "Fresh"}.map{|item| "#{item["name"]} - - #{item["type"][1]["name"]}" }
 
-#.select{|item| item["type"][0]["name"] == "Fresh"}
-	break
+recipe["fresh"] = itemArray.select{|item| item["type"][0]["name"] == "Fresh"}.map{|item| item["name"]} 
+
+titleItems = recipe["name"].split(' ').map{|item| item.downcase.singularize }
+
+recipe["must"] =  recipe["fresh"].select {|item| titleItems.select{|inTitle| inTitle.similar(item)>55 }.count> 0}
+
+recipe["fresh"] = recipe["fresh"] - recipe["must"]
 
 end
 
-## find main
-
+File.open("/Users/li/Downloads/Script/gitFiles/food/allRecipes_withMust.json","w") do |f|
+  f.write(allRecipes.to_json)
+end
 

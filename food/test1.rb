@@ -5,6 +5,11 @@ require 'nokogiri'
 require 'open-uri'
 require 'iconv'
 
+def string_difference_percent(a, b)
+  longer = [a.size, b.size].max
+  same = a.each_char.zip(b.each_char).select { |a,b| a == b }.size
+  (longer - same) / a.size.to_f
+end
 
 def getCategory (glossary)
 
@@ -36,7 +41,7 @@ return linkItem
 end
 
 
-puts getCategory("erer")
+puts string_difference_percent( "chekcken","chicken%20breast")
 
 
 
