@@ -1,4 +1,21 @@
+$('.w-dyn-item .ingredient-list-test').each(
 
+  function(index, element) {
+
+    var _this = $(element);
+
+    var text = _this.text();
+
+    console.log(text)
+
+    var select = text.indexOf(' ') == -1 ? text.length : text.indexOf(' '); 
+
+    var className = text.substr(0, select);
+       
+    _this.parent().parent().addClass(className.toLowerCase());
+   
+  }
+);
 
 $('.w-form-label').each(
   function() {
