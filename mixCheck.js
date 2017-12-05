@@ -1,3 +1,17 @@
+
+
+$('.w-form-label').each(
+  function() {
+    var catName = $(this).text();
+
+    // console.log(catName)
+
+      $(this).parent().children().attr('value', catName.toLowerCase());
+   // $(this).attr('data-filter', catName.toLowerCase());
+   
+});
+
+
 var checkboxFilter = {
   // Declare any variables we will need as properties of the object
   $filters: null,
@@ -15,18 +29,25 @@ var checkboxFilter = {
     // to refer to the parent "checkboxFilter" 
     // object so that we can share methods and 
     // properties between all parts of the object.
-    self.$filters = $('#filterform');
+    self.$filters = $('#filterform_top');
     self.$reset = $('#reset');
     self.$container = $('#container');
-    self.$filters.find('.cd-filter-block').each(function(){
+
+    self.$filters.each(function(){
+
+      console.log($(this).find('input'));
+
       self.groups.push({
         $inputs: $(this).find('input'),
         active: [],
 		    tracker: false
       });
     });
+
+
     self.bindHandlers();
   },
+
   // The "bindHandlers" method will listen for whenever a form value changes. 
   bindHandlers: function(){
     var self = this;
@@ -87,15 +108,21 @@ var checkboxFilter = {
           }
         }
       };
+
     self.outputArray = []; // reset output array
+
 	  do{
 		  crawl();
 	  }
 	  while(!crawled && checkTrackers());
     self.outputString = self.outputArray.join();
-    // If the output string is empty, show all rather than none:
+ // If the output string is empty, show all rather than none:
     !self.outputString.length && (self.outputString = 'all'); 
-    //console.log(self.outputString); 
+
+    console.log(self.outputArray);
+
+
+  //  console.log(self.outputString); 
     // ^ we can check the console here to take a look at the filter string that is produced
     // Send the output string to MixItUp via the 'filter' method:
 	  if(self.$container.mixItUp('isLoaded')){
