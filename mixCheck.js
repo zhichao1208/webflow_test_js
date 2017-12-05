@@ -21,6 +21,7 @@ $('.w-form-label').each(
   function() {
     var catName = $(this).text();
 
+
       $(this).parent().children().attr('value', catName.toLowerCase());
    // $(this).attr('data-filter', catName.toLowerCase());
    
@@ -105,11 +106,16 @@ var checkboxFilter = {
         }
         return (done < self.groups.length);
       },
+
       crawl = function(){
         for(var i = 0, group; group = self.groups[i]; i++){
+
           group.active[group.tracker] && (cache += group.active[group.tracker]);
+
           if(i === self.groups.length - 1){
+
             self.outputArray.push(cache);
+
             cache = '';
             updateTrackers();
           }
@@ -135,9 +141,26 @@ var checkboxFilter = {
       crawl();
     }
     while(!crawled && checkTrackers());
-    self.outputString = self.outputArray.join();
+
+
+    for(var i=0; i < self.outputArray.length; i++) {
+
+       var item = self.outputArray[i];
+       self.outputArray[i] = '.'+item
+
+    }
+
+           self.outputString = self.outputArray.join();
+
+          if (self.outputString === '.') 
+        { 
+            self.outputString = 'all'; 
+
+        }
+
+
+
  // If the output string is empty, show all rather than none:
-    !self.outputString.length && (self.outputString = 'all'); 
 
     //console.log(self.outputArray);
 
