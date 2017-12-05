@@ -6,11 +6,13 @@ $('.w-dyn-item .ingredient-list-test').each(
 
     var text = _this.text();
 
-    console.log(text)
-
     var select = text.indexOf(' ') == -1 ? text.length : text.indexOf(' '); 
 
     var className = text.substr(0, select);
+
+   className =  className.split(',').join(' ')
+
+    console.log(className)
        
     _this.parent().parent().addClass(className.toLowerCase());
    
