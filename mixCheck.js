@@ -4,7 +4,7 @@ $('.w-form-label').each(
   function() {
     var catName = $(this).text();
 
-    // console.log(catName)
+    console.log(catName)
 
       $(this).parent().children().attr('value', catName.toLowerCase());
    // $(this).attr('data-filter', catName.toLowerCase());
