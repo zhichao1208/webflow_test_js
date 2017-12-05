@@ -11,8 +11,6 @@ $('.w-dyn-item .ingredient-list-test').each(
     var className = text.substr(0, select);
 
    className =  className.split(',').join(' ')
-
-    console.log(className)
        
     _this.parent().parent().addClass(className.toLowerCase());
    
@@ -22,8 +20,6 @@ $('.w-dyn-item .ingredient-list-test').each(
 $('.w-form-label').each(
   function() {
     var catName = $(this).text();
-
-    console.log(catName)
 
       $(this).parent().children().attr('value', catName.toLowerCase());
    // $(this).attr('data-filter', catName.toLowerCase());
@@ -54,12 +50,14 @@ var checkboxFilter = {
 
     self.$filters.each(function(){
 
-      console.log($(this).find('input'));
+      //console.log($(this).find('input'));
 
       self.groups.push({
+
         $inputs: $(this).find('input'),
         active: [],
-		    tracker: false
+        tracker: false
+
       });
     });
 
@@ -69,10 +67,13 @@ var checkboxFilter = {
 
   // The "bindHandlers" method will listen for whenever a form value changes. 
   bindHandlers: function(){
+
     var self = this;
+
     self.$filters.on('change', function(){
       self.parseFilters();
     });
+    
     self.$reset.on('click', function(e){
       e.preventDefault();
       self.$filters[0].reset();
@@ -88,16 +89,16 @@ var checkboxFilter = {
       group.$inputs.each(function(){ 
         $(this).is(':checked') && group.active.push(this.value);
       });
-	    group.active.length && (group.tracker = 0);
+      group.active.length && (group.tracker = 0);
     }
     self.concatenate();
   },
   // The "concatenate" method will crawl through each group, concatenating filters as desired:
   concatenate: function(){
     var self = this,
-		  cache = '',
-		  crawled = false,
-		  checkTrackers = function(){
+      cache = '',
+      crawled = false,
+      checkTrackers = function(){
         var done = 0;
         for(var i = 0, group; group = self.groups[i]; i++){
           (group.tracker === false) && done++;
@@ -130,22 +131,22 @@ var checkboxFilter = {
 
     self.outputArray = []; // reset output array
 
-	  do{
-		  crawl();
-	  }
-	  while(!crawled && checkTrackers());
+    do{
+      crawl();
+    }
+    while(!crawled && checkTrackers());
     self.outputString = self.outputArray.join();
  // If the output string is empty, show all rather than none:
     !self.outputString.length && (self.outputString = 'all'); 
 
-    console.log(self.outputArray);
+    //console.log(self.outputArray);
 
 
-  //  console.log(self.outputString); 
+   console.log(self.outputString); 
     // ^ we can check the console here to take a look at the filter string that is produced
     // Send the output string to MixItUp via the 'filter' method:
-	  if(self.$container.mixItUp('isLoaded')){
-    	self.$container.mixItUp('filter', self.outputString);
-	  }
+    if(self.$container.mixItUp('isLoaded')){
+      self.$container.mixItUp('filter', self.outputString);
+    }
   }
 };
