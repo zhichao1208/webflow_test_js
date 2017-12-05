@@ -12,7 +12,7 @@ $('.w-dyn-item .ingredient-list-test').each(
 
    className =  className.split(',').join(' ')
        
-    _this.parent().parent().addClass(className.toLowerCase());
+    _this.parent().parent().parent().addClass(className.toLowerCase());
    
   }
 );
@@ -158,8 +158,6 @@ var checkboxFilter = {
 
         }
 
-
-
  // If the output string is empty, show all rather than none:
 
     //console.log(self.outputArray);
@@ -173,3 +171,10 @@ var checkboxFilter = {
     }
   }
 };
+
+
+
+
+
+
+

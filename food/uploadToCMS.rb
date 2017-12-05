@@ -107,7 +107,7 @@ ingredientsId =  ingredientslist.map{|item| ingredientsIdData.select{|id| id["na
 break
 end
 
-# puts bodys[0]["fields"]["ingredients"]
+puts bodys[0]["fields"]["ingredientslist-text"]
 
 # puts site.listCollections
 =begin
