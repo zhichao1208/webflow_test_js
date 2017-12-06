@@ -170,20 +170,50 @@ var countChecked = function(checkedList) {
     var result = ingredientList.filter(function(val) {
   return checkedList.indexOf(val) != -1;
 });
+    var other = ingredientList.filter(function(val) {
+  return checkedList.indexOf(val) === -1;
+});
 
-    console.log($(this).parent().children()[0]);
-   console.log(checkedList)
-   console.log(ingredientList)
-   console.log(result)
 
    var sort = Number(result.length/ingredientList.length)
 
    $(this).parent().parent().parent().attr('value', sort);
 
+   $(this).parent().parent().parent().attr('result', result);
 
-   console.log(result.length + '/' + ingredientList.length)
-   console.log("==============")
-   //console.log($(this).parent().parent().parent().attr('value'));
+    $(this).parent().parent().parent().attr('other', other);
+
+
+  // console.log(result.length + '/' + ingredientList.length)
+  // console.log("==============")
+$('.w-dyn-item .ingredient-list-show').each(
+
+  function(index, element) {
+
+    var _this = $(element);
+
+    var text = _this.text();
+
+    var result = _this.parent().parent().parent().attr('result') ;
+     var other = _this.parent().parent().parent().attr('other') ;
+
+
+    _this.text(result + "<br>" + other);
+
+  }
+);
+/*
+  for (var i = children.length - 1; i >= 0; i--) {
+
+
+     console.log(children[i].attributes) ;
+
+
+  }
+*/
+   //.text(result + "||" + other);
+
+
 
    //console.log(result.length + '/' + ingredientList.length)
 
