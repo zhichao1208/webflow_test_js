@@ -14,13 +14,13 @@ $('.w-dyn-item .ingredient-list-test').each(
 
   var className =  text.toLowerCase().split(',');
 
-  for (var name of className){
+    for (var i = className.length - 1; i >= 0; i--) {
 
-    name = name.replace(/\s/g, ''); 
+      className[i] = className[i].replace(/\s/g, ''); 
+    };
 
-  }
 
-console.log(className.join(' '))
+  console.log(className.join(' '));
        
     _this.parent().parent().parent().addClass(className);
    
