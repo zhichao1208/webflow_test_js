@@ -1,4 +1,3 @@
-
 $('.w-dyn-item .ingredient-list-test').each(
 
   function(index, element) {
@@ -7,24 +6,33 @@ $('.w-dyn-item .ingredient-list-test').each(
 
     var text = _this.text();
 
-    var select = text.indexOf(' ') == -1 ? text.length : text.indexOf(' '); 
+   // console.log(_this.parent().parent().parent());
 
-    var className = text.substr(0, select);
+     //var select = text.indexOf(' ') == -1 ? text.length : text.indexOf(' '); 
 
-   className =  className.split(',').join(' ')
+  //  var className = text.substr(0, select);
+
+  var className =  text.toLowerCase().split(',');
+
+  for (var name of className){
+
+    name = name.replace(/\s/g, ''); 
+
+  }
+
+console.log(className.join(' '))
        
-    _this.parent().parent().parent().addClass(className.toLowerCase());
+    _this.parent().parent().parent().addClass(className);
    
   }
 );
+
 
 $('.w-form-label').each(
   function() {
     var catName = $(this).text();
 
-
       $(this).parent().children().attr('value', catName.toLowerCase());
-   // $(this).attr('data-filter', catName.toLowerCase());
    
 });
 
