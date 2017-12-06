@@ -155,13 +155,11 @@ var checkboxFilter = {
     }
 
            self.outputString = self.outputArray.join();
-
           if (self.outputString === '.') 
         { 
-            self.outputString = 'all'; 
+            self.outputString = ''; 
 
         }
-
    //console.log(self.outputArray); 
 var countChecked = function(checkedList) {
 
@@ -207,7 +205,7 @@ var countChecked = function(checkedList) {
    //console.log(checkedList)
    //console.log(ingredientList)
 
-   var sort = result.length/ingredientList.length
+   var sort = Number(result.length/ingredientList.length)
 
    $(this).parent().parent().parent().attr('value', sort);
 
@@ -243,13 +241,43 @@ var countChecked = function(checkedList) {
           countChecked(self.outputArray)
 
 
-          self.$container.mixItUp('filter',self.outputString);
-          self.$container.mixItUp('sort','value:desc');
+         // console.log(self.$container.mixItUp("getState"));
 
-          var items = self.$container.mixItUp("getState")["$show"];
+         self.$container.mixItUp('filter',self.outputString);
 
-         console.log(items.length)
+         var items = self.$container.find(".mix");
+
+         var sortArray = []
+
+         console.log(items);
+           for (var i of items) {
+
+            sortArray.push(i);
+
+          }
+            
+       sortArray =  sortArray.sort(function(a,b){return Number(a.attributes.value.value) > Number(b.attributes.value.value) }).reverse();
+
+        for (var i of sortArray) {
+
+            console.log( Number(i.attributes.value.value) )
+
+          }
+
+          self.$container.mixItUp('sort',sortArray);
+
+           //console.log(itemsArray.sort(function(a,b){return Number(a.attributes.value.value) > Number(b.attributes.value.value) })) 
+
+
 /*
+                   var items = self.$container.mixItUp("getState")["$show"].sort(function(a,b){return Number(a.attributes.value.value) > Number(b.attributes.value.value) });
+
+         //console.log(items)
+
+        
+
+         
+
            for (var i in items) {
 
             console.log(i)
