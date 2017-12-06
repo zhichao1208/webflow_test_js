@@ -172,15 +172,15 @@ var countChecked = function(checkedList) {
 });
 
 
-   //console.log(checkedList)
-   //console.log(ingredientList)
+   console.log(checkedList)
+   console.log(ingredientList)
 
    var sort = Number(result.length/ingredientList.length)
 
    $(this).parent().parent().parent().attr('value', sort);
 
 
-  // console.log(result.length + '/' + ingredientList.length)
+   console.log(result.length + '/' + ingredientList.length)
    //console.log($(this).parent().parent().parent().attr('value'));
 
    //console.log(result.length + '/' + ingredientList.length)
@@ -219,7 +219,7 @@ var countChecked = function(checkedList) {
 
          var sortArray = []
 
-         console.log(items);
+        // console.log(items);
            for (var i of items) {
 
             sortArray.push(i);
