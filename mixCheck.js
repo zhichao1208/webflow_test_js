@@ -171,9 +171,10 @@ var countChecked = function(checkedList) {
   return checkedList.indexOf(val) != -1;
 });
 
-
+    console.log($(this).parent().children()[0]);
    console.log(checkedList)
    console.log(ingredientList)
+   console.log(result)
 
    var sort = Number(result.length/ingredientList.length)
 
@@ -181,6 +182,7 @@ var countChecked = function(checkedList) {
 
 
    console.log(result.length + '/' + ingredientList.length)
+   console.log("==============")
    //console.log($(this).parent().parent().parent().attr('value'));
 
    //console.log(result.length + '/' + ingredientList.length)
@@ -225,12 +227,6 @@ var countChecked = function(checkedList) {
           }
             
        sortArray =  sortArray.sort(function(a,b){return Number(a.attributes.value.value) > Number(b.attributes.value.value) }).reverse();
-
-        for (var i of sortArray) {
-
-            console.log( Number(i.attributes.value.value) )
-
-          }
 
           self.$container.mixItUp('sort',sortArray);
           self.$container.mixItUp('filter',self.outputString);
