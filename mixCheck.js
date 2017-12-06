@@ -210,10 +210,8 @@ var countChecked = function(checkedList) {
 
           countChecked(self.outputArray)
 
-
          // console.log(self.$container.mixItUp("getState"));
 
-         self.$container.mixItUp('filter',self.outputString);
 
          var items = self.$container.find(".mix");
 
@@ -235,6 +233,7 @@ var countChecked = function(checkedList) {
           }
 
           self.$container.mixItUp('sort',sortArray);
+          self.$container.mixItUp('filter',self.outputString);
 
            //console.log(itemsArray.sort(function(a,b){return Number(a.attributes.value.value) > Number(b.attributes.value.value) })) 
 
