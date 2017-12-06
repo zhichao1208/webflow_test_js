@@ -1,3 +1,4 @@
+
 $('.w-dyn-item .ingredient-list-test').each(
 
   function(index, element) {
@@ -26,6 +27,7 @@ $('.w-form-label').each(
    // $(this).attr('data-filter', catName.toLowerCase());
    
 });
+
 
 
 var checkboxFilter = {
@@ -80,6 +82,8 @@ var checkboxFilter = {
       self.$filters[0].reset();
       self.parseFilters();
     });
+
+
   },
   // The parseFilters method checks which filters are active in each group:
   parseFilters: function(){
@@ -158,23 +162,104 @@ var checkboxFilter = {
 
         }
 
+   //console.log(self.outputArray); 
+var countChecked = function(checkedList) {
+
+
+//var checkedList =  checkedList;
+
+/*
+ $( "input:checked" ).each(
+
+  function() {
+
+   checkedList.push($(this).attr('value'));
+
+});
+*/
+
+ for(var i=0; i < checkedList.length; i++) {
+
+       var item = checkedList[i];
+       checkedList[i] = checkedList[i].substr(1);
+
+    }
+
+
+  $('.ingredient-list-test').each(
+
+  function() {
+
+   var ingredientList =  $(this).text().split(',');
+
+   for (var i = ingredientList.length - 1; i >= 0; i--) {
+
+
+     ingredientList[i] = ingredientList[i].toLowerCase();
+
+   };
+
+    var result = ingredientList.filter(function(val) {
+  return checkedList.indexOf(val) != -1;
+});
+
+
+   //console.log(checkedList)
+   //console.log(ingredientList)
+
+   var sort = result.length/ingredientList.length
+
+   $(this).parent().parent().parent().attr('value', sort);
+
+
+  // console.log(result.length + '/' + ingredientList.length)
+   //console.log($(this).parent().parent().parent().attr('value'));
+
+   //console.log(result.length + '/' + ingredientList.length)
+
+});
+  };
+
+//countChecked(self.outputArray);
+ 
+//( "input[type=checkbox]" ).on( "change", countChecked(self.outputArray) );
+
+/*
+};
  // If the output string is empty, show all rather than none:
 
     //console.log(self.outputArray);
 
+*/
 
-   console.log(self.outputString); 
+          //self.$container.mixItUp('setOptions',options);
+
     // ^ we can check the console here to take a look at the filter string that is produced
     // Send the output string to MixItUp via the 'filter' method:
     if(self.$container.mixItUp('isLoaded')){
-      self.$container.mixItUp('filter', self.outputString);
+
+     // console.log(self.$container.mixItUp("getOption")); 
+
+          countChecked(self.outputArray)
+
+
+          self.$container.mixItUp('filter',self.outputString);
+          self.$container.mixItUp('sort','value:desc');
+
+          var items = self.$container.mixItUp("getState")["$show"];
+
+         console.log(items.length)
+/*
+           for (var i in items) {
+
+            console.log(i)
+
+           }
+
+*/      
+     // self.$container.mixItUp('remix', 'all', true); 
+      //,'sort','value:desc'
     }
   }
 };
-
-
-
-
-
-
 
