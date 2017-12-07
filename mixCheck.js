@@ -200,7 +200,7 @@ $('.w-dyn-item .ingredient-list-show').each(
 
           }
             
-       sortArray =  sortArray.sort(function(a,b){return Number(a.attributes.value.value) > Number(b.attributes.value.value) }).reverse();
+       sortArray =  sortArray.filter(function(el) {return el.attributes.value.value > 0.45}).sort(function(a,b){return Number(a.attributes.value.value) > Number(b.attributes.value.value) }).reverse();
 
           self.$container.mixItUp('sort',sortArray);
           self.$container.mixItUp('filter',self.outputString);
