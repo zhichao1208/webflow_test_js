@@ -184,6 +184,14 @@ $('.w-dyn-item .ingredient-list-show').each(
 });
   };
 
+  var options  = {
+    load: {
+        filter: 'none'
+    }
+}
+
+     self.$container.mixItUp('setOptions',options)
+
     // ^ we can check the console here to take a look at the filter string that is produced
     // Send the output string to MixItUp via the 'filter' method:
     if(self.$container.mixItUp('isLoaded')){
