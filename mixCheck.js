@@ -177,7 +177,7 @@ $('.w-dyn-item .ingredient-list-show').each(
      var result = _this.parent().parent().parent().attr('result') ;
      var other = _this.parent().parent().parent().attr('other') ;
 
-    _this.innerText(result + "\n"  + other);
+    _this.text(result + "\n"  + other);
 
   }
 );
