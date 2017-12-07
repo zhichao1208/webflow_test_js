@@ -23,8 +23,6 @@ var checkboxFilter = {
 
     self.$filters.each(function(){
 
-      //console.log($(this).find('input'));
-
       self.groups.push({
 
         $inputs: $(this).find('input'),
@@ -130,21 +128,9 @@ var checkboxFilter = {
             self.outputString = ''; 
 
         }
-   //console.log(self.outputArray); 
+
+
 var countChecked = function(checkedList) {
-
-
-//var checkedList =  checkedList;
-
-/*
- $( "input:checked" ).each(
-
-  function() {
-
-   checkedList.push($(this).attr('value'));
-
-});
-*/
 
  for(var i=0; i < checkedList.length; i++) {
 
@@ -153,7 +139,6 @@ var countChecked = function(checkedList) {
 
     }
 
-
   $('.ingredient-list-test').each(
 
   function() {
@@ -161,7 +146,6 @@ var countChecked = function(checkedList) {
    var ingredientList =  $(this).text().split(',');
 
    for (var i = ingredientList.length - 1; i >= 0; i--) {
-
 
      ingredientList[i] = ingredientList[i].toLowerCase();
 
@@ -174,7 +158,6 @@ var countChecked = function(checkedList) {
   return checkedList.indexOf(val) === -1;
 });
 
-
    var sort = Number(result.length/ingredientList.length)
 
    $(this).parent().parent().parent().attr('value', sort);
@@ -183,9 +166,6 @@ var countChecked = function(checkedList) {
 
     $(this).parent().parent().parent().attr('other', other);
 
-
-  // console.log(result.length + '/' + ingredientList.length)
-  // console.log("==============")
 $('.w-dyn-item .ingredient-list-show').each(
 
   function(index, element) {
@@ -194,62 +174,26 @@ $('.w-dyn-item .ingredient-list-show').each(
 
     var text = _this.text();
 
-    var result = _this.parent().parent().parent().attr('result') ;
+     var result = _this.parent().parent().parent().attr('result') ;
      var other = _this.parent().parent().parent().attr('other') ;
 
-
-    _this.text(result + "<br>" + other);
+    _this.innerText(result + "\n"  + other);
 
   }
 );
-/*
-  for (var i = children.length - 1; i >= 0; i--) {
-
-
-     console.log(children[i].attributes) ;
-
-
-  }
-*/
-   //.text(result + "||" + other);
-
-
-
-   //console.log(result.length + '/' + ingredientList.length)
-
 });
   };
-
-//countChecked(self.outputArray);
- 
-//( "input[type=checkbox]" ).on( "change", countChecked(self.outputArray) );
-
-/*
-};
- // If the output string is empty, show all rather than none:
-
-    //console.log(self.outputArray);
-
-*/
-
-          //self.$container.mixItUp('setOptions',options);
 
     // ^ we can check the console here to take a look at the filter string that is produced
     // Send the output string to MixItUp via the 'filter' method:
     if(self.$container.mixItUp('isLoaded')){
 
-     // console.log(self.$container.mixItUp("getOption")); 
-
           countChecked(self.outputArray)
-
-         // console.log(self.$container.mixItUp("getState"));
-
 
          var items = self.$container.find(".mix");
 
          var sortArray = []
 
-        // console.log(items);
            for (var i of items) {
 
             sortArray.push(i);
@@ -261,27 +205,6 @@ $('.w-dyn-item .ingredient-list-show').each(
           self.$container.mixItUp('sort',sortArray);
           self.$container.mixItUp('filter',self.outputString);
 
-           //console.log(itemsArray.sort(function(a,b){return Number(a.attributes.value.value) > Number(b.attributes.value.value) })) 
-
-
-/*
-                   var items = self.$container.mixItUp("getState")["$show"].sort(function(a,b){return Number(a.attributes.value.value) > Number(b.attributes.value.value) });
-
-         //console.log(items)
-
-        
-
-         
-
-           for (var i in items) {
-
-            console.log(i)
-
-           }
-
-*/      
-     // self.$container.mixItUp('remix', 'all', true); 
-      //,'sort','value:desc'
     }
   }
 };
