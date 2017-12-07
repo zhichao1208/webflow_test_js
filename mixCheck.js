@@ -204,11 +204,13 @@ $('.w-dyn-item .ingredient-list-show').each(
 
            for (var i of items) {
 
+            if (i.attributes.value.value > 0.45) { 
+
             sortArray.push(i);
 
           }
             
-       sortArray =  sortArray.filter(function(el) {return el.attributes.value.value > 0.45}).sort(function(a,b){return Number(a.attributes.value.value) > Number(b.attributes.value.value) }).reverse();
+       sortArray =  sortArray.sort(function(a,b){return Number(a.attributes.value.value) > Number(b.attributes.value.value) }).reverse();
 
           self.$container.mixItUp('sort',sortArray);
           self.$container.mixItUp('filter',self.outputString);
