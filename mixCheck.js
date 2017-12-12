@@ -1,11 +1,4 @@
 
-  var options  = {
-    load: {
-        filter: 'none'
-    }
-}
-
-  $('#container').mixItUp('setOptions',options)
 
 var checkboxFilter = {
   // Declare any variables we will need as properties of the object
@@ -207,6 +200,8 @@ $('.w-dyn-item .ingredient-list-show').each(
             if (i.attributes.value.value > 0.45) { 
 
             sortArray.push(i);
+
+          }
 
           }
             
